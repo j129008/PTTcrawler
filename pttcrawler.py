@@ -46,8 +46,8 @@ def parseGos(link , g_id):
     a = a.split("</div>")
     a = a[4].split("<span class=\"f2\">※ 發信站: 批踢踢實業坊(ptt.cc),")
     content = a[0].replace(' ', '').replace('\n', '').replace('\t', '')
-    content = re.sub( '<[^>]*>', '', content)
-    print(content)
+    content = re.sub( '<([^>]*)>[^<]*<[^>]*>', '', content)
+    content = re.sub( '<([^>]*)>', '', content)
     # message
     num , all , g , b , n ,message = 0,0,0,0,0,{}
     for tag in soup.find_all("div","push"):
