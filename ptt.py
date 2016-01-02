@@ -2,6 +2,8 @@ import json
 import jieba
 import jieba.analyse
 
+jieba.analyse.set_stop_words("./stopWords.txt")
+
 with open('./data.json') as data_file:
     data = json.load(data_file)
 
