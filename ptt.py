@@ -3,6 +3,7 @@ import jieba
 import jieba.analyse
 
 jieba.analyse.set_stop_words("./stopWords.txt")
+jieba.analyse..load_userdict("./pttDict.txt")
 
 with open('./data.json') as data_file:
     data = json.load(data_file)
