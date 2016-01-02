@@ -1,6 +1,7 @@
 import json
 import jieba
 import jieba.analyse
+import operator
 
 jieba.analyse.set_stop_words("./stopWords.txt")
 jieba.load_userdict("./pttDict.txt")
@@ -8,6 +9,8 @@ jieba.load_userdict("./pttDict.txt")
 with open('./data.json') as data_file:
     data = json.load(data_file)
 
+allTag = []
+cnt = 0
 for post in data:
     bad_push = post['h_推文總數']['b']
     KMTnum = 0
@@ -21,6 +24,18 @@ for post in data:
 
     content = post['f_內文']
     tags = jieba.analyse.extract_tags(content)
+    allTag = allTag + tags
     print(tags)
     print(KMTpush)
     print('==============================================')
+    cnt += 1
+
+d = {}
+for ele in allTag:
+    try:
+        d[ele] += 1
+    except:
+        d[ele] = 1
+d = sorted(d.items(), key=operator.itemgetter(1))
+print(d)
+print(cnt)
