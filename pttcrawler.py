@@ -60,7 +60,7 @@ def parseGos(link , g_id):
         num += 1
         push_tag = tag.find("span","push-tag").string.replace(' ', '')
         push_userid = tag.find("span","push-userid").string.replace(' ', '')
-        push_content = tag.find("span","push-content").string.replace(' ', '').replace('\n', '').replace('\t', '')
+        push_content = tag.find("span","push-content").string.replace(' ', '').replace('\n', '').replace('\t', '').replace(':', '')
         push_content = opencc.convert(push_content)
         push_ipdatetime = tag.find("span","push-ipdatetime").string.replace('\n', '')
 
