@@ -12,10 +12,8 @@ for post in data:
     bad_push = post['h_推文總數']['b']
     KMTnum = 0
     KMTpush = ""
-    if int(bad_push) < 10:
-        continue
     for push in post['g_推文']:
-        if "党工" in post['g_推文'][push]['留言內容']:
+        if "五楼" in post['g_推文'][push]['留言內容']:
             KMTnum += 1
             KMTpush += post['g_推文'][push]['留言內容']+'\n'
     if KMTnum == 0:
