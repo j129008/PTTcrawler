@@ -2,6 +2,7 @@ import re
 import sys
 import json
 import requests
+import opencc
 from time import sleep
 from bs4 import BeautifulSoup
 
@@ -31,8 +32,10 @@ def parseGos(link , g_id):
     print(resp)
     # author
     author  = soup.find(id="main-container").contents[1].contents[0].contents[1].string.replace(' ', '')
+    author = opencc.convert(author)
     # title
     title = soup.find(id="main-container").contents[1].contents[2].contents[1].string.replace(' ', '')
+    title = opencc.convert(title)
     # date
     date = soup.find(id="main-container").contents[1].contents[3].contents[1].string
     # ip
@@ -48,6 +51,7 @@ def parseGos(link , g_id):
     content = a[0].replace(' ', '').replace('\n', '').replace('\t', '')
     content = re.sub( '<([^>]*)>[^<]*<[^>]*>', '', content)
     content = re.sub( '<([^>]*)>', '', content)
+    content = opencc.convert(content)
     # message
     num , all , g , b , n ,message = 0,0,0,0,0,{}
     for tag in soup.find_all("div","push"):
@@ -55,6 +59,7 @@ def parseGos(link , g_id):
         push_tag = tag.find("span","push-tag").string.replace(' ', '')
         push_userid = tag.find("span","push-userid").string.replace(' ', '')
         push_content = tag.find("span","push-content").string.replace(' ', '').replace('\n', '').replace('\t', '')
+        push_content = opencc.convert(push_content)
         push_ipdatetime = tag.find("span","push-ipdatetime").string.replace('\n', '')
 
         message[num]={"狀態":push_tag,"留言者":push_userid,"留言內容":push_content,"留言時間":push_ipdatetime}
