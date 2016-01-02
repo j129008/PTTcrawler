@@ -51,7 +51,8 @@ def parseGos(link , g_id):
     content = a[0].replace(' ', '').replace('\n', '').replace('\t', '')
     content = re.sub( '<([^>]*)>[^<]*<[^>]*>', '', content)
     content = re.sub( '<([^>]*)>', '', content)
-    content = re.sub( 'Sent[A-Za-z0-9]*', '', content)
+    content = re.sub( '[A-Za-z0-9]*', '', content)
+    content = re.sub( '\.', '', content)
     content = opencc.convert(content)
     # message
     num , all , g , b , n ,message = 0,0,0,0,0,{}
