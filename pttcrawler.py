@@ -10,10 +10,13 @@ def crawler(start,end):
     page = start; times = end-start+1; g_id = 0;
     for a in range(times):
         print('index is '+ str(page))
-        resp = requests.get(
-        url="http://www.ptt.cc/bbs/Gossiping/index"+str(page)+".html",
-        cookies={"over18": "1"}
-        )
+        try:
+            resp = requests.get(
+            url="http://www.ptt.cc/bbs/Gossiping/index"+str(page)+".html",
+            cookies={"over18": "1"}
+            )
+        except:
+            pass
         soup = BeautifulSoup(resp.text)
         for tag in soup.find_all("div","r-ent"):
             try:
@@ -24,7 +27,7 @@ def crawler(start,end):
                 parseGos(link,g_id)
             except:
                 pass
-        sleep(0.2)
+        # sleep(0.2)
         page += 1
 def parseGos(link , g_id):
     resp = requests.get(url=str(link),cookies={"over18":"1"})
