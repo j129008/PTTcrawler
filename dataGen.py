@@ -1,6 +1,8 @@
 import json
 import jieba
 import jieba.analyse
+import numpy as np
+from sklearn import tree
 # import operator
 
 jieba.analyse.set_stop_words("./stopWords.txt")
@@ -11,6 +13,8 @@ with open('./data.json') as data_file:
 
 instance = {}
 genData = []
+x = []
+y = []
 for post in data:
     instance['5F'] = 0
     instance['loser'] = 0
@@ -68,5 +72,15 @@ for post in data:
     if "记者" in content:
         instance['reporter'] = 1
     # genData.extend(instance)
-    print(instance)
+    # print(instance)
+    y.append(instance['5F'])
+    x.append([instance['loser'],instance['loser_self'],instance['girl'],instance['beauty'],instance['sister'],instance['taiwan'],instance['reporter'],instance['news']])
+
+X = np.array(x)
+y = np.array(y)
+
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(X, y)
+print(clf.score(X, y))
+
 
