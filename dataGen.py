@@ -29,6 +29,7 @@ for post in data:
     instance['taiwan'] = 0
     instance['reporter'] = 0
     instance['news'] = 0
+    instance['c5F'] = 0
 
     for push in post['g_推文']:
         if "五楼" in post['g_推文'][push]['留言內容']:
@@ -75,10 +76,13 @@ for post in data:
         instance['news'] = 1
     if "记者" in content:
         instance['reporter'] = 1
+
+    if "五楼" in content:
+        instance['c5F'] = 1
     # genData.extend(instance)
     # print(instance)
     y.append(instance['5F'])
-    x.append([instance['loser'],instance['loser_self'],instance['girl'],instance['beauty'],instance['sister'],instance['taiwan'],instance['reporter'],instance['news']])
+    x.append([instance['loser'],instance['loser_self'],instance['girl'],instance['beauty'],instance['sister'],instance['taiwan'],instance['reporter'],instance['news'], instance['c5F']])
 
 X = np.array(x)
 y = np.array(y)
@@ -87,7 +91,7 @@ clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X, y)
 yPred = clf.predict(X)
 tree.export_graphviz(clf, out_file=dot_data,
-                     feature_names=['魯蛇', '魯蛇自稱', '女生', '正妹', '妹妹', '國民黨', '新聞', '記者'],
+                     feature_names=['魯蛇', '魯蛇自稱', '女生', '正妹', '妹妹', '國民黨', '新聞', '記者', '五樓'],
                      class_names=['no', 'yes'],
                      filled=True, rounded=True,
                      special_characters=True)
