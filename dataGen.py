@@ -3,6 +3,7 @@ import jieba
 import jieba.analyse
 import numpy as np
 from sklearn import tree
+from sklearn.metrics import f1_score
 # import operator
 
 jieba.analyse.set_stop_words("./stopWords.txt")
@@ -81,6 +82,7 @@ y = np.array(y)
 
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X, y)
-print(clf.score(X, y))
+yPred = clf.predict(X)
+print(f1_score(y, yPred, average='binary'))
 
 
