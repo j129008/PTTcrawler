@@ -4,7 +4,10 @@ import jieba.analyse
 import numpy as np
 from sklearn import tree
 from sklearn.metrics import f1_score
+import pydot
+from sklearn.externals.six import StringIO
 # import operator
+dot_data = StringIO()
 
 jieba.analyse.set_stop_words("./stopWords.txt")
 jieba.load_userdict("./pttDict.txt")
@@ -83,6 +86,14 @@ y = np.array(y)
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X, y)
 yPred = clf.predict(X)
+tree.export_graphviz(clf, out_file=dot_data,
+                     feature_names=['魯蛇', '魯蛇自稱', '女生', '正妹', '妹妹', '國民黨', '新聞', '記者'],
+                     class_names=['no', 'yes'],
+                     filled=True, rounded=True,
+                     special_characters=True)
+
 print(f1_score(y, yPred, average='binary'))
+graph = pydot.graph_from_dot_data(dot_data.getvalue())
+graph.write_png("dm.png")
 
 
