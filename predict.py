@@ -1,12 +1,8 @@
-import json
 import sys
 import jieba
 import jieba.analyse
 import numpy as np
 import pickle
-from sklearn import tree
-from sklearn.metrics import f1_score
-from sklearn.decomposition import TruncatedSVD
 import opencc
 
 jieba.analyse.set_stop_words("./stopWords.txt")
@@ -25,10 +21,8 @@ with open('feature.pkl', 'rb') as f0:
 for ele in featureList:
     instance[ele] = 0
 
-fin = open("pred.txt","rb")
-for ele in fin:
-    content = ele
-    content = opencc.convert(content)
+content = sys.argv[1]
+content = opencc.convert(content)
 
 print(content)
 for ele in featureList:
@@ -36,6 +30,7 @@ for ele in featureList:
         instance[ele] = 1
 
 term = []
+x = []
 for ele in featureList:
     term.append(instance[ele])
 x.append(term)
