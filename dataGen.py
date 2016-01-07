@@ -47,7 +47,6 @@ X = np.array(x)
 y = np.array(y)
 
 lsa = TruncatedSVD(n_components=100)
-lsa.fit(X)
 X = lsa.fit_transform(X)
 
 clf = tree.DecisionTreeClassifier()
