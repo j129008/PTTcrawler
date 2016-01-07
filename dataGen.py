@@ -4,6 +4,7 @@ import jieba.analyse
 import numpy as np
 from sklearn import tree
 from sklearn.metrics import f1_score
+from sklearn.decomposition import TruncatedSVD
 
 jieba.analyse.set_stop_words("./stopWords.txt")
 jieba.load_userdict("./pttDict.txt")
@@ -18,6 +19,7 @@ x = []
 y = []
 
 featureList = []
+
 for ele in feature:
     featureList.append(ele.strip())
 
@@ -44,7 +46,12 @@ for post in data:
 X = np.array(x)
 y = np.array(y)
 
+lsa = TruncatedSVD(n_components=100)
+lsa.fit(X)
+X = lsa.fit_transform(X)
+
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X[:10000], y[:10000])
-yPred = clf.predict(X[10000:])
-print(f1_score(y[10000:], yPred, average='binary'))
+
+yPred = clf.predict(X)
+print(f1_score(y[10000:], yPred[10000:], average='binary'))
