@@ -25,8 +25,12 @@ with open('feature.pkl', 'rb') as f0:
 for ele in featureList:
     instance[ele] = 0
 
-content = sys.argv[1]
-content = opencc.convert(content)
+fin = open("pred.txt","rb")
+for ele in fin:
+    content = ele
+    content = opencc.convert(content)
+
+print(content)
 for ele in featureList:
     if ele in content:
         instance[ele] = 1
