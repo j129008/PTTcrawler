@@ -16,18 +16,18 @@ for post in data:
     KMTnum = 0
     KMTpush = ""
     for push in post['g_推文']:
-        if "五楼" in post['g_推文'][push]['留言內容']:
+        if ("五楼" or "5F" or "5f" ) in post['g_推文'][push]['留言內容']:
             KMTnum += 1
             KMTpush += post['g_推文'][push]['留言內容']+'\n'
     if KMTnum == 0:
         continue
 
     content = post['f_內文']
-    tags = jieba.analyse.extract_tags(content)
+    tags = jieba.analyse.extract_tags(content,topK=3)
     allTag = allTag + tags
-    print(tags)
-    print(KMTpush)
-    print('==============================================')
+    # print(tags)
+    # print(KMTpush)
+    # print('==============================================')
     cnt += 1
 
 d = {}
@@ -37,5 +37,6 @@ for ele in allTag:
     except:
         d[ele] = 1
 d = sorted(d.items(), key=operator.itemgetter(1))
-print(d)
-print(cnt)
+for ele in d:
+    print(ele[0])
+# print(cnt)
