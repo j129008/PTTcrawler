@@ -7,6 +7,7 @@ import pickle
 from sklearn import tree
 from sklearn.metrics import f1_score
 from sklearn.decomposition import TruncatedSVD
+import opencc
 
 jieba.analyse.set_stop_words("./stopWords.txt")
 jieba.load_userdict("./pttDict.txt")
@@ -25,6 +26,7 @@ for ele in featureList:
     instance[ele] = 0
 
 content = sys.argv[1]
+content = opencc.convert(content)
 for ele in featureList:
     if ele in content:
         instance[ele] = 1
