@@ -2,9 +2,7 @@ import json
 import jieba
 import jieba.analyse
 import numpy as np
-from sklearn import tree
-from sklearn.metrics import f1_score
-from sklearn.decomposition import TruncatedSVD
+import pickle
 
 jieba.analyse.set_stop_words("./stopWords.txt")
 jieba.load_userdict("./pttDict.txt")
@@ -46,11 +44,9 @@ for post in data:
 X = np.array(x)
 y = np.array(y)
 
-lsa = TruncatedSVD(n_components=100)
-X = lsa.fit_transform(X)
+with open('dataX.pkl', 'wb') as f0:
+    pickle.dump(X, f0)
 
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(X[:10000], y[:10000])
+with open('dataY.pkl', 'wb') as f1:
+    pickle.dump(y, f1)
 
-yPred = clf.predict(X)
-print(f1_score(y[10000:], yPred[10000:], average='binary'))
