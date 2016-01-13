@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.json
 .gitignore
+*.pkl
 
 # C extensions
 *.so
