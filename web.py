@@ -10,8 +10,10 @@ def indexGet():
     if 'keyword' in request.args:
         result = predict( request.args['keyword'] )
         if result == 1:
-            return render_template('app.html', foo='成功！')
-    return render_template('app.html', foo='失敗')
+            return render_template('app.html', foo='分析結果：這是五樓文')
+        else:
+            return render_template('app.html', foo='分析結果：這不會出現五樓')
+    return render_template('app.html', foo='')
 
 
 if __name__ == "__main__":
