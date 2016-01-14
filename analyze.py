@@ -1,8 +1,8 @@
 import pickle
 import numpy as np
-from sklearn import tree
 from sklearn.metrics import f1_score
 from sklearn.decomposition import TruncatedSVD
+from sklearn.ensemble import RandomForestClassifier
 
 with open('dataX.pkl', 'rb') as f1:
     X = pickle.load(f1)
@@ -33,7 +33,7 @@ X_train = np.array(X_train)
 y_train = y_non5f[:len(y_5f)] + y_5f[:]
 y_train = np.array(y_train)
 
-clf = tree.DecisionTreeClassifier()
+clf = RandomForestClassifier(n_estimators=10)
 clf = clf.fit(X_train, y_train)
 print(clf.score(X[:10000], y[:10000]))
 
