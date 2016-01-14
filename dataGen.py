@@ -28,8 +28,15 @@ for post in data:
 
     for push in post['g_推文']:
         if ("五楼" or "5F" or "5f") in post['g_推文'][push]['留言內容']:
-            ans = 1
-    y.append(ans)
+            ans += 1
+    if ans == 0:
+        y.append(0)
+    elif ans < 5:
+        y.append(1)
+    elif ans < 10:
+        y.append(2)
+    else:
+        y.append(3)
 
     content = post['f_內文']
     for ele in featureList:
