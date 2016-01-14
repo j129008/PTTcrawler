@@ -34,7 +34,7 @@ for post in data:
     content = post['f_內文']
     for ele in featureList:
         if ele in content:
-            instance[ele] = 1
+            instance[ele] += 1
 
     term = []
     for ele in featureList:

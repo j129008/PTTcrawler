@@ -21,7 +21,7 @@ y_5f = []
 y_non5f = []
 
 for ele in range(len(y)):
-    if y[ele] == 1:
+    if y[ele] != 0:
         X_5f.append(X[ele])
         y_5f.append(y[ele])
     else:
@@ -36,4 +36,4 @@ y_train = np.array(y_train)
 clf = RandomForestClassifier(n_estimators=10)
 clf = clf.fit(X_train, y_train)
 f1_weighted = cross_validation.cross_val_score(clf, X, y, cv=4, scoring='f1_weighted', n_jobs=4)
-print('f1_weighted:' +str(f1_weighted.mean()))
+print('f1_weighted:' + str(f1_weighted.mean()))
