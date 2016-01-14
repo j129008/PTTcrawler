@@ -13,8 +13,29 @@ with open('dataY.pkl', 'rb') as f2:
 lsa = TruncatedSVD(n_components=100)
 X = lsa.fit_transform(X)
 
+X = np.array(X).tolist()
+y = np.array(y).tolist()
+X_5f = []
+X_non5f = []
+y_5f = []
+y_non5f = []
+
+for ele in range(len(y)):
+    if y[ele] == 1:
+        X_5f.append(X[ele])
+        y_5f.append(y[ele])
+    else:
+        X_non5f.append(X[ele])
+        y_non5f.append(y[ele])
+
+X_train = X_non5f[:len(X_5f)] + X_5f[:]
+X_train = np.array(X_train)
+y_train = y_non5f[:len(y_5f)] + y_5f[:]
+y_train = np.array(y_train)
+
 clf = tree.DecisionTreeClassifier()
-clf = clf.fit(X[:10000], y[:10000])
+clf = clf.fit(X_train, y_train)
+print(clf.score(X[:10000], y[:10000]))
 
 yPred = clf.predict(X)
-print(f1_score(y[10000:], yPred[10000:], average='binary'))
+print(f1_score(y, yPred, average='binary'))
