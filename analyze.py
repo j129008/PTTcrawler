@@ -11,7 +11,8 @@ with open('dataY.pkl', 'rb') as f2:
     y = pickle.load(f2)
 
 lsa = TruncatedSVD(n_components=50)
-X = lsa.fit_transform(X)
+lsa_result = lsa.fit(X)
+X = lsa_result.transform(X)
 
 X = np.array(X).tolist()
 y = np.array(y).tolist()
@@ -37,3 +38,9 @@ clf = RandomForestClassifier(n_estimators=10)
 clf = clf.fit(X_train, y_train)
 f1_weighted = cross_validation.cross_val_score(clf, X, y, cv=4, scoring='f1_weighted', n_jobs=4)
 print('f1_weighted:' + str(f1_weighted.mean()))
+
+with open('lsa.pkl', 'wb') as f1:
+    pickle.dump(lsa_result, f1)
+
+with open('model.pkl', 'wb') as f2:
+    pickle.dump(clf, f2)
